@@ -1,4 +1,4 @@
-alert('Program Compiled Successfully inside mitchs');
+alert('Program Compiled Successfully inside mitchsssss');
 import { animate } from 'motion';
 
 //Main
