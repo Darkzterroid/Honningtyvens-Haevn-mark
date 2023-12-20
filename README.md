@@ -1,6 +1,6 @@
 # Finsweet Developer Starter
 
-//hello from Mitch and Mark
+//hello from Mitch and Mark - og kun mitch
 
 A starter template for both Client & Power projects.
 
