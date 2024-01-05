@@ -761,7 +761,7 @@
   }
 
   // src/index.ts
-  alert("Program Compiled Successfully inside Marks kode");
+  alert("Program Compiled Successfully inside Fuck kode");
   document.addEventListener("alpine:init", () => {
     Alpine.data("utils", () => ({
       level: 0,
