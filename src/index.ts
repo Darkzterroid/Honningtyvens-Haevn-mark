@@ -1,4 +1,5 @@
-alert('Program Compiled Successfully inside Fuck kode');
+//alert(document.location.pathname);
+import barba from '@barba/core';
 import { animate } from 'motion';
 
 //Main
@@ -30,19 +31,37 @@ document.addEventListener('alpine:init', () => {
     showYellow: Boolean,
     showGreen: Boolean,
     showRed: Boolean,
+    showForm: false,
     startScreen: true,
-    startButtonText: 'Start',
+    startButtonText: 'Start New Game',
     startMessage: 'Welcome to The Game',
     timerId: 0,
     timeAnimation: {},
     buttonAnimation: {},
+    startAnimation: {},
+    animateStartScreen() {
+      animate(
+        '#bearStart',
+        {
+          transform: ['translate(80svw, 0px)', 'translate(-80svw, 0px)'],
+        },
+        { duration: 36, easing: 'linear' }
+      );
+      animate(
+        '#leaderboard-wrapper',
+        {
+          transform: ['translate(80svw, 0px)', 'translate(0px, 0px)'],
+        },
+        { duration: 18, easing: [0.64, 0.64, 0.89, 0.99] }
+      );
+    },
     init() {
+      this.animateStartScreen();
       this.time = this.levelArray[this.level][4];
       this.updateStates();
       this.currentTime = this.time;
       this.$watch('level', () => {
         this.time = this.levelArray[this.level][4];
-        this.gameRunning = true;
         this.timeAnimation = animate(
           '.time',
           { scale: [1, 0.5] },
@@ -61,10 +80,19 @@ document.addEventListener('alpine:init', () => {
       });
     },
     refresh() {
+      animate('.start-screen', { transform: 'translate(0px, 100%)' }, { duration: 0.2 });
+      this.startScreen = false;
       this.level = 1;
       this.score = 0.0;
-      this.startScreen = false;
       this.timeUpdate();
+      /*
+      setTimeout(function () {
+      }, 200);
+      */
+      /*
+      if (window.location.pathname == '/leaderboard') {
+        window.location.pathname = '/';
+      }*/
     },
     cloakBlue() {
       if (!this.startScreen) {
@@ -133,44 +161,41 @@ document.addEventListener('alpine:init', () => {
     addScore() {
       this.score = Number((this.score + this.currentTime).toFixed(1));
     },
-    subtractScore() {
+    divideScore() {
       this.score = Number((this.score / 2).toFixed(1));
     },
     win() {
-      clearInterval(this.timerId);
-      this.stopAnimation();
-      this.level = 0;
-      this.startScreen = true;
+      this.stopGame();
       this.startMessage = 'You Win';
     },
     lose() {
-      clearInterval(this.timerId);
-      this.stopAnimation();
-      this.level = 0;
-      this.startScreen = true;
+      this.stopGame();
       this.startMessage = 'You Lose';
     },
-    /*
-    continue() {
+    stopGame() {
       clearInterval(this.timerId);
-      this.stopAnimation();
+      this.timeAnimation.stop();
+      this.buttonAnimation.stop();
+      this.level = 0;
+      animate('.start-screen', { transform: 'translate(0px, 0%)' }, { duration: 0.2 });
+      this.animateStartScreen();
       this.startScreen = true;
-      this.startMessage = 'Difficulty is:';
+      this.showForm = true;
+      document.getElementById('score').value = this.score;
     },
-    */
     reset() {
       this.showBlue = true;
       this.showYellow = true;
       this.showGreen = true;
       this.showRed = true;
-      this.subtractScore();
-    },
-    stopAnimation() {
-      this.timeAnimation.stop();
-      this.buttonAnimation.stop();
+      this.divideScore();
     },
   }));
 });
+
+//Barba Init
+barba.init();
+
 //Key Listeners
 document.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
@@ -189,3 +214,27 @@ document.addEventListener('keypress', (e) => {
     document.getElementById('red')?.click();
   }
 });
+
+//fetch from Xano
+/*
+const myHeaders = new Headers();
+myHeaders.append('Content-Type', 'application/json');
+
+const raw = JSON.stringify({
+  Name: 'Hansiiii Hansisher',
+  Score: '1000000',
+  Item_ID: '',
+});
+
+const requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow',
+};
+
+fetch('https://x8ki-letl-twmt.n7.xano.io/api:SUP2mHFr/user', requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.log('error', error));
+*/
