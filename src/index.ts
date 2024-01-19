@@ -198,7 +198,7 @@ barba.init();
 
 //Key Listeners
 document.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
+  if (e.key === ' ') {
     document.getElementById('startButton')?.click();
   }
   if (e.key === '1') {
