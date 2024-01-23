@@ -14,14 +14,17 @@ document.addEventListener('alpine:init', () => {
       [false, false, false, false, 0.0], //BEGIN RANGE
       //EASY
       [false, false, false, true, 10.0],
+      [false, false, false, false, 10.0],
       [true, false, false, true, 5.0],
       [false, true, true, false, 5.0],
       //MEDIUM
       [true, true, true, false, 5.0],
       [true, true, true, true, 5.0],
+      [false, false, false, false, 5.0],
       [true, true, true, true, 5.0],
       //Hard
       [true, false, false, false, 3.0],
+      [false, false, false, false, 3.0],
       [false, true, true, false, 3.0],
       [true, true, true, false, 3.0],
       [true, true, true, true, 3.0],
@@ -157,6 +160,19 @@ document.addEventListener('alpine:init', () => {
       this.showYellow = this.levelArray[this.level][1];
       this.showGreen = this.levelArray[this.level][2];
       this.showRed = this.levelArray[this.level][3];
+
+      // return random states if the original states are false
+      if (
+        this.showBlue === false &&
+        this.showYellow === false &&
+        this.showGreen === false &&
+        this.showRed === false
+      ) {
+        this.showBlue = Math.random() > 0.5;
+        this.showYellow = Math.random() > 0.5;
+        this.showGreen = Math.random() > 0.5;
+        this.showRed = Math.random() > 0.5;
+      }
     },
     addScore() {
       this.score = Number((this.score + this.currentTime).toFixed(1));
@@ -198,9 +214,10 @@ barba.init();
 
 //Key Listeners
 document.addEventListener('keypress', (e) => {
-  if (e.key === ' ') {
+  /*if (e.key === ' ') {
     document.getElementById('startButton')?.click();
   }
+  */
   if (e.key === '1') {
     document.getElementById('blue')?.click();
   }
