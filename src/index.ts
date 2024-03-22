@@ -173,6 +173,14 @@ document.addEventListener('alpine:init', () => {
         this.showGreen = Math.random() > 0.5;
         this.showRed = Math.random() > 0.5;
       }
+      if (
+        this.showBlue === false &&
+        this.showYellow === false &&
+        this.showGreen === false &&
+        this.showRed === false
+      ) {
+        this.showRed = true;
+      }
     },
     addScore() {
       this.score = Number((this.score + this.currentTime).toFixed(1));
